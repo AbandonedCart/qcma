@@ -9,6 +9,8 @@ QT       += core \
             widgets \
             network
 
+android:QT += androidextras multimedia
+
 TARGET = qcma
 
 TEMPLATE = app
@@ -35,7 +37,8 @@ SOURCES += src/main.cpp \
     src/forms/configwidget.cpp \
     src/forms/confirmdialog.cpp \
     src/forms/pinform.cpp \
-    src/forms/progressform.cpp
+    src/forms/progressform.cpp \
+    src/androidmessage.cpp
 
 HEADERS += \
     src/capability.h \
@@ -59,12 +62,13 @@ HEADERS += \
     src/forms/configwidget.h \
     src/forms/confirmdialog.h \
     src/forms/pinform.h \
-    src/forms/progressform.h
+    src/forms/progressform.h \
+    src/androidmessage.h
 
 INCLUDEPATH += src/
 
-CONFIG += link_pkgconfig
-PKGCONFIG += libvitamtp libavformat libavcodec libavutil libswscale
+!android:CONFIG += link_pkgconfig
+!android:PKGCONFIG += libvitamtp libavformat libavcodec libavutil libswscale
 
 QMAKE_CXXFLAGS += -Wno-write-strings -Wall -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS
 
@@ -76,7 +80,9 @@ OTHER_FILES += \
     resources/images/psv_icon_16.png \
     resources/images/qcma.png \
     resources/qcma.desktop \
-    qcma.rc
+    qcma.rc \
+    android/AndroidManifest.xml \
+    android/src/com/github/codestation/qcma/QcmaNotification.java
 
 FORMS += \
     src/forms/configwidget.ui \
@@ -127,3 +133,5 @@ win32:QMAKE_CXXFLAGS += -mno-ms-bitfields
 
 ICON = resources/images/$${TARGET}.icns
 macx:QT_CONFIG -= no-pkg-config
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
